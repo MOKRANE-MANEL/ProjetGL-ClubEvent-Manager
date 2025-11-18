@@ -9,10 +9,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        // أنشئ Scene واحدة فقط
+        
         Scene scene = new Scene(new javafx.scene.layout.StackPane(), BASE_WIDTH, BASE_HEIGHT);
 
-        // استدعاء ChoiceUI ليعطي الـ Root
         ChoiceUI choiceUI = new ChoiceUI();
         scene.setRoot(choiceUI.createContent(stage, scene));
 
@@ -25,3 +24,4 @@ public class Main extends Application {
         launch(args);
     }
 }
+
