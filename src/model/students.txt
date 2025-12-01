@@ -1,0 +1,15 @@
+Raouf Salmi
+password1
+email1
+usthb
+info
+Mohamed larbi
+password2
+email2
+usthb
+biologie
+Amine Mokhtar
+password3
+email3
+usthb
+geologie

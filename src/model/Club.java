@@ -1,64 +1,86 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Club {
-    private final String id;
-    private String name;
+    private String ClubName;
+    private String university;
     private String description;
-    private final List<Member> members;
-    private final List<Event> events;
+    private String email;
+    private String password;
 
-    public Club(String id, String name, String description) {
-        this.id = Objects.requireNonNull(id, "L'ID du club ne peut pas être null");
-        this.name = Objects.requireNonNull(name, "Le nom du club ne peut pas être null");
+    public Club(String clubName, String university, String description, String email, String password) {
+        this.password = Objects.requireNonNull(password, "L'password du club ne peut pas être null");
+        this.ClubName = Objects.requireNonNull(clubName, "Le nom du club ne peut pas être null");
         this.description = Objects.requireNonNull(description, "La description du club ne peut pas être null");
-        this.members = new ArrayList<>();
-        this.events = new ArrayList<>();
+        this.university = Objects.requireNonNull(university, "L'universite ne peut pas être null");
+        this.email = Objects.requireNonNull(email, "L'eamil du club ne peut pas être null");
     }
 
-    public String getId() { return id; }
-    public String getName() { return name; }
-    public String getDescription() { return description; }
-    public List<Member> getMembers() { return new ArrayList<>(members); }
-    public List<Event> getEvents() { return new ArrayList<>(events); }
+    public String getClubName() {
+        return ClubName;
+    }
 
-    public void setName(String name) { this.name = Objects.requireNonNull(name); }
-    public void setDescription(String description) { this.description = Objects.requireNonNull(description); }
+    public String getUniversity() {
+        return university;
+    }
 
-    public boolean addMember(Member member) {
-        Objects.requireNonNull(member);
-        if (!members.contains(member)) {
-            members.add(member);
-            return true;
+    public String getDescription() {
+        return description;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getpassword() {                    
+        return password;
+    }   
+
+    public void setClubName(String ClubName) throws IllegalArgumentException {
+        if(ClubName == null) {
+            throw new IllegalArgumentException("Le nom du club ne peut pas être null");
         }
-        return false;
+        this.ClubName = Objects.requireNonNull(ClubName); 
     }
 
-    public boolean removeMember(Member member) {
-        return members.remove(member);
-    }
-
-    public boolean addEvent(Event event) {
-        Objects.requireNonNull(event);
-        if (!events.contains(event)) {
-            events.add(event);
-            return true;
+    public void setDescription(String description) throws IllegalArgumentException {
+        if(description == null) {
+            throw new IllegalArgumentException("La description du club ne peut pas être null");
         }
-        return false;
+        this.description = Objects.requireNonNull(description); 
     }
 
-    public boolean removeEvent(Event event) {
-        return events.remove(event);
+    public void setUniversity(String university) throws IllegalArgumentException {
+        if(university == null) {
+            throw new IllegalArgumentException("L'universite ne peut pas être null");
+        }
+        this.university = university;
     }
 
-    public int getMemberCount() { return members.size(); }
-    public int getEventCount() { return events.size(); }
+    public void setEmail(String email) throws IllegalArgumentException {
+        if(email == null) {
+            throw new IllegalArgumentException("L'email du club ne peut pas être null");
+        }
+        this.email = email;
+    }
 
-    @Override
+    public void setpassword(String password) throws IllegalArgumentException {
+        if(password == null) {
+            throw new IllegalArgumentException("Le password du club ne peut pas être null");
+        }
+        this.password = password;
+    }
+
     public String toString() {
-        return String.format("Club[%s: %s - %d membres, %d événements]", id, name, members.size(), events.size());
+        return "Club Name: " + ClubName + ", University: " + university + ", Email: " + email;
+    }
+
+    public void addEvent(Event e, Platform p) {
+        p.addEvent(e);
+    }
+
+    public void removeEvent(Event e, Platform p) {
+        p.removeEvent(e);
     }
 }
