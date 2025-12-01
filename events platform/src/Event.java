@@ -1,12 +1,17 @@
-public class Event {
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Event implements Sujet {
     
     private String eventName;
-    private String eventDate;
+    private LocalDate eventDate;
     private String eventLocation;
     private String clubName;
-    private EventType Type;
 
-    public Event(String eventName, String eventDate, String eventLocation, String clubName) {
+    private List<Observeur> observers = new ArrayList<>();
+
+    public Event(String eventName, LocalDate eventDate, String eventLocation, String clubName) {
         this.eventName = eventName;
         this.eventDate = eventDate;
         this.eventLocation = eventLocation;
@@ -17,7 +22,7 @@ public class Event {
         return eventName;
     }
 
-    public String getEventDate() {
+    public LocalDate getEventDate() {
         return eventDate;
     }
 
@@ -33,7 +38,7 @@ public class Event {
         this.eventName = eventName;
     }
 
-    public void setEventDate(String eventDate) {
+    public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
     }
 
@@ -43,6 +48,23 @@ public class Event {
 
     public void setClubName(String clubName) {
         this.clubName = clubName;
+    }
+
+    @Override
+    public void addObserver(Observeur o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observeur o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observeur o : observers) {
+            o.update(this);
+        }
     }
 
     public String toString() {

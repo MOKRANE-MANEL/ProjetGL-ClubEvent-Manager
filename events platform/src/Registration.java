@@ -1,49 +1,41 @@
-public class Registration {
-    private String studentName;
-    private String clubName;
-    private String eventName;
-    private String registrationDate;
+import java.time.LocalDate;
 
-    public Registration(String studentName, String clubName, String eventName, String registrationDate) {
-        this.studentName = studentName;
-        this.clubName = clubName;
-        this.eventName = eventName;
+public class Registration {
+    private Student student;
+    private Event event;
+    private LocalDate registrationDate;
+
+    public Registration(Student student, Event event, LocalDate registrationDate) {
+        this.student = student;
+        this.event = event;
         this.registrationDate = registrationDate;
     }
 
-    public String getStudentName() {
-        return studentName;
+    public Student getStudent() {
+        return student;
     }
 
-    public String getClubName() {
-        return clubName;
+    public Event getEvent() {
+        return event;
     }
 
-    public String getEventName() {
-        return eventName;
-    }
-
-    public String getRegistrationDate() {
+    public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public void setClubName(String clubName) {
-        this.clubName = clubName;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public void setRegistrationDate(String registrationDate) {
+    public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
     }
 
     public String toString() {
-        return "Student Name: " + studentName + ", Club Name: " + clubName + ", Event Name: " + eventName + ", Registration Date: " + registrationDate;
+        return "Registration{student=" + student.getName() + ", event=" + event.getEventName() + ", registrationDate=" + registrationDate + "}";
     }
 }

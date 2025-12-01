@@ -35,22 +35,38 @@ public class Club {
         return password;
     }   
 
-    public void setClubName(String ClubName) {
+    public void setClubName(String ClubName) throws IllegalArgumentException {
+        if(ClubName == null) {
+            throw new IllegalArgumentException("Le nom du club ne peut pas être null");
+        }
         this.ClubName = Objects.requireNonNull(ClubName); 
     }
-    public void setDescription(String description) {
+
+    public void setDescription(String description) throws IllegalArgumentException {
+        if(description == null) {
+            throw new IllegalArgumentException("La description du club ne peut pas être null");
+        }
         this.description = Objects.requireNonNull(description); 
     }
 
-    public void setUniversity(String university) {
+    public void setUniversity(String university) throws IllegalArgumentException {
+        if(university == null) {
+            throw new IllegalArgumentException("L'universite ne peut pas être null");
+        }
         this.university = university;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws IllegalArgumentException {
+        if(email == null) {
+            throw new IllegalArgumentException("L'email du club ne peut pas être null");
+        }
         this.email = email;
     }
 
-    public void setapassword(String password) {
+    public void setpassword(String password) throws IllegalArgumentException {
+        if(password == null) {
+            throw new IllegalArgumentException("Le password du club ne peut pas être null");
+        }
         this.password = password;
     }
 

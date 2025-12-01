@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class Student {
     private String name;
     private String password;
@@ -57,14 +59,14 @@ public class Student {
         return "Student{name='" + name + "', password=" + password + ", email='" + email + "', university='" + university + "', speciality='" + speciality + "}";
     }
 
-    public void register_to_event(Event e, Club c, Platform p, String registrationDate) {
-        Registration r = new Registration(this.name, c.getClubName(), e.getEventName(), registrationDate);
+    public void register_to_event(Event e, Club c, Platform p, LocalDate registrationDate) {
+        Registration r = new Registration(this, e, registrationDate);
         p.getRegistrations().add(r);
     }
 
     public boolean is_registered_to_event(Event e, Platform p) {
         for (Registration r : p.getRegistrations()) {
-            if (r.getStudentName().equals(this.name) && r.getEventName().equals(e.getEventName())) {
+            if (r.getStudent().getName().equals(this.name) && r.getEvent().getEventName().equals(e.getEventName())) {
                 return true;
             }
         }
@@ -74,7 +76,7 @@ public class Student {
     public void unregister_from_event(Event e, Platform p) {
         Registration toRemove = null;
         for (Registration r : p.getRegistrations()) {
-            if (r.getStudentName().equals(this.name) && r.getEventName().equals(e.getEventName())) {
+            if (r.getStudent().getName().equals(this.name) && r.getEvent().getEventName().equals(e.getEventName())) {
                 toRemove = r;
                 break;
             }

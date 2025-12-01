@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Screens {
@@ -11,7 +12,6 @@ public class Screens {
     public void displayWelcomeScreen() {
         System.out.println("\n");
         System.out.println("Welcome to the Events Platform!");
-        /*a short description of the platform */
         System.out.println("This platform allows students to discover and register for events organized by various clubs at their universities.");
         System.out.println("Whether you're looking to enhance your skills, network with peers, or simply have fun, our platform has something for everyone.");
         System.out.println("Join us today and start exploring the exciting events happening around you!\n");
@@ -61,19 +61,41 @@ public class Screens {
         System.out.println("Please enter your details to create a new account.");
         System.out.println("Name: ");
         String Name = scanner.nextLine();
+        while(Name.trim().isEmpty()) {
+            System.out.println("Name cannot be empty. Please enter your name:");
+            Name = scanner.nextLine();
+        }
         System.out.println("Password: ");
         String Password = scanner.nextLine();
+        while(Password.trim().isEmpty()) {
+            System.out.println("Password cannot be empty. Please enter your password:");
+            Password = scanner.nextLine();
+        }
         System.out.println("Email: ");
         String Email = scanner.nextLine();
+        while(Email.trim().isEmpty()) {
+            System.out.println("Email cannot be empty. Please enter your email:");
+            Email = scanner.nextLine();
+        }
         System.out.println("University: ");
         String University = scanner.nextLine();
+        while(University.trim().isEmpty()) {
+            System.out.println("University cannot be empty. Please enter your university:");
+            University = scanner.nextLine();
+        }
         System.out.println("Speciality: ");
         String Speciality = scanner.nextLine();
+        while(Speciality.trim().isEmpty()) {
+            System.out.println("Speciality cannot be empty. Please enter your speciality:");
+            Speciality = scanner.nextLine();
+        }
         Platform platform = Platform.getInstance();
 
         if(platform.addStudent(new Student(Name, Password, Email, University, Speciality))) {
             System.out.println("You have been registered succesfully.");
-            DisplayPlatformToAddEvent(platform);
+            Student user = platform.findStudentByName(Name);
+            DislpayEventsforStudent(platform, user);
+
         }
         else {
             System.out.println("Student name already exists. Registration failed.");
@@ -89,18 +111,39 @@ public class Screens {
         System.out.println("\n");
         System.out.println("Club name: ");
         String ClubName = scanner.nextLine();
+        while(ClubName.trim().isEmpty()) {
+            System.out.println("Club name cannot be empty. Please enter your club name:");
+            ClubName = scanner.nextLine();
+        }
         System.out.println("University: ");
         String University = scanner.nextLine();
+        while(University.trim().isEmpty()) {
+            System.out.println("University cannot be empty. Please enter your university:");
+            University = scanner.nextLine();
+        }
         System.out.println("Describe your club: ");
         String description = scanner.nextLine();
-        System.out.println("Describe your club: ");
+        while(description.trim().isEmpty()) {
+            System.out.println("Description cannot be empty. Please describe your club:");
+            description = scanner.nextLine();
+        }
+        System.out.println("Email: ");
         String Email = scanner.nextLine();
+        while(Email.trim().isEmpty()) {
+            System.out.println("Email cannot be empty. Please enter your email:");
+            Email = scanner.nextLine();
+        }
         System.out.println("Password: ");
         String Password = scanner.nextLine();
+        while(Password.trim().isEmpty()) {
+            System.out.println("Password cannot be empty. Please enter your password:");
+            Password = scanner.nextLine();
+        }
         Platform platform = Platform.getInstance();
         if(platform.addClub(new Club(ClubName, University, description, Email, Password))) {
             System.out.println("You have been registered succesfully.");
-            DisplayPlatformToAddEvent(platform);
+            Club club = platform.findClubByName(ClubName);
+            DisplayPlatformToAddEvent(platform, club);
         }
         else {
             System.out.println("Club name already exists. Registration failed.");
@@ -117,18 +160,25 @@ public class Screens {
             System.out.println("Please enter your details.");
             System.out.println("Email: ");
             String Email = scanner.nextLine();
+            while(Email.trim().isEmpty()) {
+                System.out.println("Email cannot be empty. Please enter your email:");
+                Email = scanner.nextLine();
+            }
             System.out.println("Password: ");
             String password = scanner.nextLine();
+            while(password.trim().isEmpty()) {
+                System.out.println("Password cannot be empty. Please enter your password:");
+                password = scanner.nextLine();
+            }
 
             Platform platform = Platform.getInstance();
 
             for (Student s : platform.getStudents()) {
-                if (s.getEmail().equals(Email) && s.getPassword().equals(password)) {
+                if (s.getEmail().trim().equalsIgnoreCase(Email.trim()) && s.getPassword().trim().equalsIgnoreCase(password.trim())) {
                     System.out.println("Valid information, Welcome to the platform.");
                     found = true;
-                    String userName = s.getName();
 
-                    DislpayEventsforStudent(platform, userName);
+                    DislpayEventsforStudent(platform, s);
                     break;
                 }
             }
@@ -145,15 +195,23 @@ public class Screens {
             System.out.println("Please enter your details.");
             System.out.println("Email: ");
             String Email = scanner.nextLine();
+            while(Email.trim().isEmpty()) {
+                System.out.println("Email cannot be empty. Please enter your email:");
+                Email = scanner.nextLine();
+            }
             System.out.println("Password: ");
             String password = scanner.nextLine();
+            while(password.trim().isEmpty()) {
+                System.out.println("Password cannot be empty. Please enter your password:");
+                password = scanner.nextLine();
+            }
 
             Platform platform = Platform.getInstance();
 
             for (Club c : platform.getClubs()) {
-                if (c.getEmail().equals(Email) && c.getpassword().equals(password)) {
+                if (c.getEmail().trim().equalsIgnoreCase(Email.trim()) && c.getpassword().trim().equalsIgnoreCase(password.trim())) {
                     System.out.println("Valid information, Welcome to the platform.");
-                    DisplayPlatformToAddEvent(platform);
+                    DisplayPlatformToAddEvent(platform, c);
                     found = true;
                     break;
                 }
@@ -164,8 +222,8 @@ public class Screens {
         }
     }
 
-    public void DislpayEventsforStudent(Platform p, String userName) {
-        System.out.println("hello dear student, here are the events available for you:");
+    public void DislpayEventsforStudent(Platform p, Student user) {
+        System.out.println("hello dear "+ user.getName() + ", here are the events available for you:");
         System.out.println("---------------");
         for(Event e : p.getEvents()) {
             System.out.println(e.toString());
@@ -184,39 +242,22 @@ public class Screens {
 
             Event selectedEvent = null;
             for(Event e : p.getEvents()) {
-                if(e.getEventName().equals(eventName)) {
+                if(e.getEventName().trim().equalsIgnoreCase(eventName)) {
                     selectedEvent = e;
                     break;
                 }
             }
 
             if(selectedEvent != null) {
-                System.out.println("Please enter your club name:");
-                String clubName = scanner.nextLine();
+                LocalDate registrationDate = LocalDate.now();
 
-                Club selectedClub = null;
-                for(Club c : p.getClubs()) {
-                    if(c.getClubName().equals(clubName)) {
-                        selectedClub = c;
-                        break;
-                    }
-                }
+                Registration newRegistration = new Registration(user, selectedEvent, registrationDate);
 
-                if(selectedClub != null) {
-                    System.out.println("Please enter the registration date (YYYY-MM-DD):");
-                    String registrationDate = scanner.nextLine();
-
-                    Registration newRegistration = new Registration(userName, selectedClub.getClubName(), selectedEvent.getEventName(), registrationDate);
-
-                    if(p.addRegistration(newRegistration)) {
-                        System.out.println("You have been registered to the event: " + selectedEvent.getEventName());
-                    } else {
-                        System.out.println("You have already registered for this event.");
-                    }
+                if(p.addRegistration(newRegistration)) {
+                    System.out.println("You have been registered to the event: " + selectedEvent.getEventName());
                 } else {
-                    System.out.println("Club not found.");
+                    System.out.println("You have already registered for this event.");
                 }
-
             } else {
                 System.out.println("Event not found.");
             }
@@ -245,8 +286,12 @@ public class Screens {
 
             Registration registrationToRemove = null;
 
-            for(Registration r : p.getRegistrations()) {
-                if(r.getStudentName().equals(userName) && r.getEventName().equals(eventName)) {
+            for (Registration r : p.getRegistrations()) {
+                String regStudent = r.getStudent().getName();
+                String regEvent   = r.getEvent().getEventName();
+
+                if (regStudent != null && regEvent != null &&
+                    regStudent.trim().equalsIgnoreCase(user.getName().trim()) && regEvent.trim().equalsIgnoreCase(eventName.trim())) {
                     registrationToRemove = r;
                     break;
                 }
@@ -272,24 +317,28 @@ public class Screens {
                 response = "exit";
             }
         }
+
+        if(response != "register" && response != "remove") {
+            System.out.println("Invalid option. Exiting the platform.. Goodbye!");
+        }
     }
 
-    public void DisplayPlatformToAddEvent(Platform p) {
-        System.out.println("Hello dear club, you can add events to the platform. You can also remove events that you have added previously.");
+    public void DisplayPlatformToAddEvent(Platform p, Club club) {
+        System.out.println("Hello dear " + club.getClubName() + ", you can add events to the platform. You can also remove events that you have added previously.");
         System.out.println("Would you like to add an event? or remove an event? (add/remove)");
         String response = "";
         response = scanner.nextLine();
         while(response.equals("add")) {
             System.out.println("Please enter the event name:");
             String eventName = scanner.nextLine();
-            System.out.println("Please enter the event date:");
-            String eventDate = scanner.nextLine();
+            System.out.println("Please enter the event date (the format must be YYYY-MM-DD):");
+            String dateInput = scanner.nextLine();
+            LocalDate eventDate = LocalDate.parse(dateInput);
             System.out.println("Please enter the event location:");
             String eventLocation = scanner.nextLine();
-            System.out.println("Please enter your club name:");
-            String clubName = scanner.nextLine();
+            String clubName = club.getClubName();
             Event newEvent = new Event(eventName, eventDate, eventLocation, clubName);
-            if(p.getEvents().add(newEvent)) {
+            if(p.addEvent(newEvent)) {
                 System.out.println("Event added successfully: " + newEvent.toString());
             } else {
                 System.out.println("Failed to add event. It may already exist.");
@@ -321,7 +370,7 @@ public class Screens {
                 }
             }
             if(eventToRemove != null) {
-                if(p.getEvents().remove(eventToRemove)) {
+                if(p.removeEvent(eventToRemove)) {
                     System.out.println("Event removed successfully: " + eventToRemove.toString());
                 } else {
                     System.out.println("Failed to remove event.");
@@ -338,5 +387,10 @@ public class Screens {
                 response = "exit";
             }
         }
+
+        if(response != "add" && response != "remove") {
+            System.out.println("Invalid option. Exiting the platform.. Goodbye!"); 
+        }
+          
     }
 }
