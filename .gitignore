@@ -21,3 +21,4 @@ bin/
 # Système
 .DS_Store
 Thumbs.db
+/nbproject/private/
