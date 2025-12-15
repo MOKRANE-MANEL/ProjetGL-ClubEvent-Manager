@@ -149,7 +149,7 @@ public class SignInUI {
 
         // Image Setup
         ImageView img = new ImageView(new Image(getClass().getResourceAsStream(
-                        "/assets/Copilot_20251115_154313-removebg-preview.png")));
+                        "yyy.png")));
         img.setPreserveRatio(false);
         img.setSmooth(true);
         img.fitWidthProperty().bind(Bindings.min(scene.widthProperty().multiply(0.40), 600.0));
