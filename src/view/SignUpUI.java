@@ -198,7 +198,7 @@ public class SignUpUI {
 
         // ---------- IMAGE (Aesthetic) ----------
         ImageView img = new ImageView(new Image(getClass().getResourceAsStream(
-            "/assets/ChatGPT_Image_15_nov._2025__13_37_42-removebg-preview.png"
+            "/view/lll.png"
         )));
         img.setPreserveRatio(true);
         img.setSmooth(true);
