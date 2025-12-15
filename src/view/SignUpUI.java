@@ -198,7 +198,7 @@ public class SignUpUI {
 
         // ---------- IMAGE (Aesthetic) ----------
         ImageView img = new ImageView(new Image(getClass().getResourceAsStream(
-            "/view/lll.png"
+            "lll.png"
         )));
         img.setPreserveRatio(true);
         img.setSmooth(true);
