@@ -16,10 +16,10 @@ public class Platform {
     private ArrayList<Registration> registrations;
     private static Platform instance = null;
 
-    private final String clubsFile = "C:/Users/omen2/OneDrive/Desktop/GL project/src/model/clubs.txt";
-    private final String studentsFile = "C:/Users/omen2/OneDrive/Desktop/GL project/src/model/students.txt";
-    private final String eventsFile = "C:/Users/omen2/OneDrive/Desktop/GL project/src/model/events.txt";
-    private final String registrationsFile = "C:/Users/omen2/OneDrive/Desktop/GL project/src/model/registrations.txt";
+    private final String clubsFile = "C:/Users/HP/Desktop/ProjetGL-ClubEvent-Manager/src/model/clubs.txt";
+    private final String studentsFile = "C:/Users/HP/Desktop/ProjetGL-ClubEvent-Manager/src/model/students.txt";
+    private final String eventsFile = "C:/Users/HP/Desktop/ProjetGL-ClubEvent-Manager/src/model/events.txt";
+    private final String registrationsFile = "C:/Users/HP/Desktop/ProjetGL-ClubEvent-Manager/src/model/registrations.txt";
 
     private Platform() {
         students = new ArrayList<>();
