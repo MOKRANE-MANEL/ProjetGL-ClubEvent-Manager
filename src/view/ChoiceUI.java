@@ -1,3 +1,4 @@
+package view;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -85,7 +86,7 @@ public class ChoiceUI {
 
         // NOTE: Controller must ensure image assets are available in the classpath.
         ImageView studentImg = new ImageView(new Image(getClass().getResourceAsStream(
-                "yyy.png")));
+                "/assets/Copilot_20251115_154313-removebg-preview.png")));
         studentImg.setPreserveRatio(true);
 
         studentImg.fitWidthProperty().bind(scene.widthProperty().multiply(0.45));
@@ -113,7 +114,7 @@ public class ChoiceUI {
 
         // NOTE: Controller must ensure image assets are available in the classpath.
         ImageView adminImg = new ImageView(new Image(getClass().getResourceAsStream(
-                "aaa.png")));
+                "/assets/ChatGPT Image 17 nov. 2025, 17_57_43.png")));
         adminImg.setPreserveRatio(true);
 
         adminImg.fitWidthProperty().bind(scene.widthProperty().multiply(0.36));

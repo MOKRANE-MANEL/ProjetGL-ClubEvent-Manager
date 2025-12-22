@@ -1,8 +1,9 @@
+package view;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class MainView extends Application {
 
     private static final double BASE_WIDTH = 1000;
     private static final double BASE_HEIGHT = 600;

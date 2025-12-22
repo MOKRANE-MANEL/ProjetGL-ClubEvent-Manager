@@ -1,3 +1,4 @@
+package view;
 // EventsUI.java
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

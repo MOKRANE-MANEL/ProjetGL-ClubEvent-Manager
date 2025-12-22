@@ -1,3 +1,7 @@
+// File: SignInUI.java (Updated with safe image loading)
+package view;
+
+import controller.MainController;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,9 +29,6 @@ public class SignInUI {
     private static final double BASE_HEIGHT = 600;
 
     // --- 🌟 Public Elements for Controller Binding 🌟 ---
-    // The Controller must access these fields to:
-    // 1. Read user input (emailField, passwordField).
-    // 2. Attach event handlers (e.g., signInButton.setOnAction, signUpLink.setOnAction, backButton.setOnAction).
     public TextField emailField;
     public PasswordField passwordField;
     public Button signInButton;
@@ -57,7 +58,6 @@ public class SignInUI {
         emailLabel.setTranslateX(-195);
         VBox.setMargin(emailLabel, new Insets(0, 0, -10, 0));
 
-        // Use public field for Controller access
         emailField = new TextField(); 
         emailField.setPromptText("Email");
         emailField.setPrefHeight(45);
@@ -69,13 +69,11 @@ public class SignInUI {
         passwordLabel.setTranslateX(-180);
         VBox.setMargin(passwordLabel, new Insets(10, 0, -10, 0));
 
-        // Use public field for Controller access
         passwordField = new PasswordField(); 
         passwordField.setPromptText("Password");
         passwordField.setPrefHeight(45);
 
         // Sign In Button Setup
-        // Use public field for Controller access
         signInButton = new Button("Sign In"); 
         signInButton.setPrefHeight(50);
         signInButton.setPrefWidth(260);
@@ -86,7 +84,6 @@ public class SignInUI {
         // Sign Up link Setup
         Label signUpText = new Label("Don't have an account? ");
         
-        // Use public field for Controller access
         signUpLink = new Hyperlink("Sign Up"); 
         signUpLink.setFont(Font.font("Segoe UI", 15));
         signUpLink.setTextFill(Color.web("#8a2be2"));
@@ -94,10 +91,6 @@ public class SignInUI {
         HBox signUpBox = new HBox(signUpText, signUpLink);
         signUpBox.setAlignment(Pos.CENTER);
         signUpBox.setSpacing(5);
-
-        // NOTE TO CONTROLLER: The navigation logic (e.g., scene.setRoot) 
-        // for signUpLink must be defined in the Controller class.
-        // signUpLink.setOnAction(e -> { ... }); // REMOVED for MVC compliance.
 
         leftContent.getChildren().addAll(
                 signInLabel,
@@ -147,18 +140,31 @@ public class SignInUI {
         scale.yProperty().bind(Bindings.divide(scene.heightProperty(), BASE_HEIGHT));
         scaledRoot.getTransforms().add(scale);
 
-        // Image Setup
-        ImageView img = new ImageView(new Image(getClass().getResourceAsStream(
-                        "yyy.png")));
-        img.setPreserveRatio(false);
-        img.setSmooth(true);
-        img.fitWidthProperty().bind(Bindings.min(scene.widthProperty().multiply(0.40), 600.0));
-        img.fitHeightProperty().bind(Bindings.min(scene.heightProperty().multiply(0.45), 450.0));
-        img.translateXProperty().bind(scene.widthProperty().multiply(0.20));
-        img.translateYProperty().bind(scene.heightProperty().multiply(0.25));
+        // ---------- IMAGE SETUP (Safe Loading) ----------
+        ImageView img = new ImageView();
+        try {
+            // Use MainController's robust image loader - pass just the filename
+            javafx.scene.image.Image image = MainController.loadImage("Copilot_20251115_154313-removebg-preview.png");
+            if (image != null) {
+                img.setImage(image);
+                img.setPreserveRatio(false);
+                img.setSmooth(true);
+                img.fitWidthProperty().bind(Bindings.min(scene.widthProperty().multiply(0.40), 600.0));
+                img.fitHeightProperty().bind(Bindings.min(scene.heightProperty().multiply(0.45), 450.0));
+                img.translateXProperty().bind(scene.widthProperty().multiply(0.20));
+                img.translateYProperty().bind(scene.heightProperty().multiply(0.25));
+                System.out.println("Image loaded successfully in SignInUI");
+            } else {
+                // Create a placeholder if image not found
+                System.out.println("Image not found in SignInUI, using placeholder");
+                img = createPlaceholderImageView(scene);
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading image in SignInUI: " + e.getMessage());
+            img = createPlaceholderImageView(scene);
+        }
 
         // ---------- BACK BUTTON Setup ----------
-        // Use public field for Controller access
         backButton = new Button("←"); 
         backButton.setStyle(
                 "-fx-background-color: linear-gradient(to right, #ff5fa2, #8a2be2);" +
@@ -182,13 +188,43 @@ public class SignInUI {
                 )
         );
 
+        backButton.setEffect(new javafx.scene.effect.DropShadow(5, Color.rgb(0, 0, 0, 0.3)));
         StackPane.setAlignment(backButton, Pos.TOP_LEFT);
         StackPane.setMargin(backButton, new Insets(20));
 
-        // NOTE TO CONTROLLER: The navigation logic for the back button 
-        // (e.g., returning to ChoiceUI) must be set via backButton.setOnAction(...) 
-        // in the Controller class.
-
         return new StackPane(scaledRoot, img, backButton);
+    }
+    
+    private ImageView createPlaceholderImageView(Scene scene) {
+        // Create a simple placeholder with text
+        VBox placeholderBox = new VBox(10);
+        placeholderBox.setAlignment(Pos.CENTER);
+        placeholderBox.setStyle("-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 10;");
+        placeholderBox.prefWidthProperty().bind(scene.widthProperty().multiply(0.40));
+        placeholderBox.prefHeightProperty().bind(scene.heightProperty().multiply(0.45));
+        
+        Label placeholderText = new Label("Image Preview");
+        placeholderText.setFont(Font.font("Segoe UI", 16));
+        placeholderText.setTextFill(Color.GRAY);
+        
+        Label placeholderSubtext = new Label("Student graphic");
+        placeholderSubtext.setFont(Font.font("Segoe UI", 12));
+        placeholderSubtext.setTextFill(Color.LIGHTGRAY);
+        
+        placeholderBox.getChildren().addAll(placeholderText, placeholderSubtext);
+        
+        // Convert to ImageView
+        javafx.scene.SnapshotParameters params = new javafx.scene.SnapshotParameters();
+        params.setFill(javafx.scene.paint.Color.TRANSPARENT);
+        javafx.scene.image.WritableImage image = placeholderBox.snapshot(params, null);
+        ImageView imageView = new ImageView(image);
+        
+        // Bind positioning
+        imageView.fitWidthProperty().bind(Bindings.min(scene.widthProperty().multiply(0.40), 600.0));
+        imageView.fitHeightProperty().bind(Bindings.min(scene.heightProperty().multiply(0.45), 450.0));
+        imageView.translateXProperty().bind(scene.widthProperty().multiply(0.20));
+        imageView.translateYProperty().bind(scene.heightProperty().multiply(0.25));
+        
+        return imageView;
     }
 }

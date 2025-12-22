@@ -1,5 +1,5 @@
 package view;
-import javafx.application.Application;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,7 +17,7 @@ import java.util.Map;
 // Its sole function is to build and style the UI (View-Factory pattern).
 // All interactive elements and methods are PUBLIC for the Controller to access and bind logic.
 
-public class AdminEventsUI extends Application {
+public class AdminEventsUI {
 
     // 🌟 Public Interactive Elements and Containers for Controller Binding 🌟
     // CONTROLLER: These public fields must be used to set event handlers (e.g., setOnAction).
@@ -38,18 +38,6 @@ public class AdminEventsUI extends Application {
     public HBox header;
 
     // ----------------------------------------------------------------
-
-    @Override
-    public void start(Stage stage) {
-        BorderPane root = createContent(stage);
-        Scene scene = new Scene(root, 1200, 800);
-        stage.setScene(scene);
-        stage.setTitle("Admin Events UI - PURE VIEW");
-        stage.show();
-        
-        // NOTE: Mock data population has been removed to maintain the "Pure View" principle.
-        // The Controller is now fully responsible for fetching data and calling view-factory methods.
-    }
 
     public BorderPane createContent(Stage stage) {
         BorderPane root = new BorderPane();
@@ -440,12 +428,5 @@ public class AdminEventsUI extends Application {
         dialogStage.setScene(scene);
         
         return dialogStage;
-    }
-
-    // ----------------------------------------------------------------
-    // 🚀 Main Launch Function
-    // ----------------------------------------------------------------
-    public static void main(String[] args) {
-        launch();
     }
 }
