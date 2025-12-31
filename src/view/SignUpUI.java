@@ -1,4 +1,5 @@
 package view;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -14,21 +15,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-/**
- * SignUpUI: A **pure View** class in the MVC architecture. 
- * Its sole responsibility is to construct and display the UI elements.
- * It contains NO application lifecycle logic, NO data manipulation, and NO event handling (Controller actions).
- * The external Controller class must use the public fields below to bind user interactions.
- */
 public class SignUpUI {
 
     private static final double LEFT_RATIO = 0.45;
     private static final double RIGHT_RATIO = 1.0 - LEFT_RATIO;
 
-    // --- 🌟 Public Elements for Controller Binding 🌟 ---
-    // The Controller must access these public fields to:
-    // 1. Read user input from the fields.
-    // 2. Attach action handlers (e.g., signUpButton.setOnAction, signInLink.setOnAction).
     public TextField fullNameField;
     public TextField studentIdField;
     public TextField majorField;
@@ -41,7 +32,6 @@ public class SignUpUI {
 
     public Pane createContent(Stage stage, Scene scene) {
 
-        // ---------- LEFT CONTENT (Aesthetic Panel) ----------
         VBox leftContent = new VBox(25);
         leftContent.setPadding(new Insets(90, 40, 40, 40));
         leftContent.setAlignment(Pos.TOP_LEFT);
@@ -53,8 +43,8 @@ public class SignUpUI {
         title.setWrapText(true);
 
         Label subText = new Label(
-            "Explore events from all clubs in one platform. " +
-            "Stay updated with school activities and join university events easily."
+                "Explore events from all clubs in one platform. " +
+                "Stay updated with school activities and join university events easily."
         );
         subText.setTextFill(Color.WHITE);
         subText.setFont(Font.font("Segoe UI", 22));
@@ -62,7 +52,6 @@ public class SignUpUI {
 
         leftContent.getChildren().addAll(title, subText);
 
-        // ---------- RIGHT CONTENT (Form Construction) ----------
         VBox rightContent = new VBox(22);
         rightContent.setAlignment(Pos.TOP_CENTER);
         rightContent.setPadding(new Insets(120, 60, 40, 60));
@@ -74,19 +63,15 @@ public class SignUpUI {
         signUpLabel.setAlignment(Pos.CENTER);
         VBox.setMargin(signUpLabel, new Insets(0, 0, 40, 0));
 
-        // ---------- FIELDS (Bound to public fields for Controller access) ----------
-        
-        // Full Name
         Label fullNameLabel = new Label("Full Name:");
-        fullNameField = new TextField(); // Bound to public field
+        fullNameField = new TextField();
         fullNameField.setPromptText("Full Name");
         fullNameField.setPrefHeight(45);
         fullNameField.getStyleClass().add("input-field");
         VBox fullNameBox = new VBox(5, fullNameLabel, fullNameField);
 
-        // Student ID
         Label studentIdLabel = new Label("Student ID:");
-        studentIdField = new TextField(); // Bound to public field
+        studentIdField = new TextField();
         studentIdField.setPromptText("12-digit ID");
         studentIdField.setPrefHeight(45);
         studentIdField.getStyleClass().add("input-field");
@@ -95,25 +80,22 @@ public class SignUpUI {
         HBox nameIdBox = new HBox(20, fullNameBox, studentIdBox);
         nameIdBox.setAlignment(Pos.CENTER_LEFT);
 
-        // Major
         Label majorLabel = new Label("Major:");
-        majorField = new TextField(); // Bound to public field
+        majorField = new TextField();
         majorField.setPromptText("Specialization");
         majorField.setPrefHeight(45);
         majorField.getStyleClass().add("input-field");
         VBox majorBox = new VBox(5, majorLabel, majorField);
 
-        // University
         Label universityLabel = new Label("University:");
-        universityField = new TextField(); // Bound to public field
+        universityField = new TextField();
         universityField.setPromptText("University");
         universityField.setPrefHeight(45);
         universityField.getStyleClass().add("input-field");
         VBox universityBox = new VBox(5, universityLabel, universityField);
 
-        // Year Combo Box
         Label yearLabel = new Label("Year:");
-        yearCombo = new ComboBox<>(); // Bound to public field
+        yearCombo = new ComboBox<>();
         yearCombo.getItems().addAll("First", "Second", "Third", "Fourth", "Fifth");
         yearCombo.setPromptText("Year");
         yearCombo.setPrefHeight(45);
@@ -123,17 +105,15 @@ public class SignUpUI {
         HBox academicBox = new HBox(15, majorBox, universityBox, yearBox);
         academicBox.setAlignment(Pos.CENTER_LEFT);
 
-        // Email
         Label emailLabel = new Label("Email:");
-        emailField = new TextField(); // Bound to public field
+        emailField = new TextField();
         emailField.setPromptText("Email");
         emailField.setPrefHeight(45);
         emailField.getStyleClass().add("input-field");
         VBox emailBox = new VBox(5, emailLabel, emailField);
 
-        // Password
         Label passwordLabel = new Label("Password:");
-        passwordField = new PasswordField(); // Bound to public field
+        passwordField = new PasswordField();
         passwordField.setPromptText("Password");
         passwordField.setPrefHeight(45);
         passwordField.getStyleClass().add("input-field");
@@ -142,19 +122,17 @@ public class SignUpUI {
         HBox emailPasswordBox = new HBox(20, emailBox, passwordBox);
         emailPasswordBox.setAlignment(Pos.CENTER_LEFT);
 
-        // ---------- SIGN UP BUTTON ----------
-        signUpButton = new Button("Sign Up"); // Bound to public field
+        signUpButton = new Button("Sign Up");
         signUpButton.setStyle(
-            "-fx-background-radius: 12;" +
-            "-fx-background-color: linear-gradient(#ff5fa2, #8a2be2);" +
-            "-fx-text-fill: white; -fx-font-family: 'Segoe UI';"
+                "-fx-background-radius: 12;" +
+                "-fx-background-color: linear-gradient(#ff5fa2, #8a2be2);" +
+                "-fx-text-fill: white; -fx-font-family: 'Segoe UI';"
         );
 
         Label loginPrompt = new Label("Already have an account?");
         loginPrompt.setFont(Font.font("Segoe UI", 15));
-        
-        // Sign In Link (Hyperlink)
-        signInLink = new Hyperlink("Sign In"); // Bound to public field
+
+        signInLink = new Hyperlink("Sign In");
         signInLink.setFont(Font.font("Segoe UI", 15));
         signInLink.setTextFill(Color.web("#8a2be2"));
 
@@ -162,21 +140,15 @@ public class SignUpUI {
         loginBox.setAlignment(Pos.CENTER);
         loginBox.setSpacing(5);
 
-        // NOTE TO CONTROLLER: The action handler for the Sign Up button (submitting the form) 
-        // must be attached to 'signUpButton' in the Controller class.
-        // NOTE TO CONTROLLER: The navigation logic for the Sign In link 
-        // (moving to SignInUI) must be attached to 'signInLink' in the Controller class.
-
         rightContent.getChildren().addAll(
-            signUpLabel,
-            nameIdBox,
-            academicBox,
-            emailPasswordBox,
-            signUpButton,
-            loginBox
+                signUpLabel,
+                nameIdBox,
+                academicBox,
+                emailPasswordBox,
+                signUpButton,
+                loginBox
         );
 
-        // ---------- BACKGROUNDS and LAYOUT (Aesthetic & Structure) ----------
         Region pinkBackground = new Region();
         pinkBackground.setStyle("-fx-background-color: linear-gradient(to bottom, #e45ba8, #d94b94);");
 
@@ -184,7 +156,6 @@ public class SignUpUI {
         whiteBackground.setStyle("-fx-background-color: white;");
 
         HBox backgroundLayer = new HBox(pinkBackground, whiteBackground);
-
         HBox contentBox = new HBox(leftContent, rightContent);
 
         VBox rootBox = new VBox();
@@ -197,10 +168,9 @@ public class SignUpUI {
         StackPane root = new StackPane();
         root.getChildren().addAll(backgroundLayer, rootBox);
 
-        // ---------- IMAGE (Aesthetic) ----------
-        ImageView img = new ImageView(new Image(getClass().getResourceAsStream(
-            "lll.png"
-        )));
+        ImageView img = new ImageView(new Image(
+                getClass().getResourceAsStream("lll.png")
+        ));
         img.setPreserveRatio(true);
         img.setSmooth(true);
         img.setMouseTransparent(true);
@@ -213,7 +183,6 @@ public class SignUpUI {
 
         root.getChildren().add(img);
 
-        // ---------- BINDING (Responsive Design) ----------
         pinkBackground.prefWidthProperty().bind(root.widthProperty().multiply(LEFT_RATIO));
         whiteBackground.prefWidthProperty().bind(root.widthProperty().multiply(RIGHT_RATIO));
         pinkBackground.prefHeightProperty().bind(root.heightProperty());
@@ -230,13 +199,9 @@ public class SignUpUI {
         pinkBackground.setMinWidth(300);
         whiteBackground.setMinWidth(420);
 
-        // NOTE TO CONTROLLER: Stylesheet loading is typically handled by the App entry point or Controller.
-        // scene.getStylesheets().add("file:/C:/sign%20interface/src/style.css");
-
         DoubleProperty scaleFactor = new SimpleDoubleProperty(1.0);
         scaleFactor.bind(scene.widthProperty().divide(1000));
 
-        // Binding Helpers (UI Utility methods - considered acceptable in the View)
         bindFontScaling(title, scaleFactor, 47);
         bindFontScaling(subText, scaleFactor, 22);
         bindFontScaling(signUpLabel, scaleFactor, 46);
@@ -255,25 +220,32 @@ public class SignUpUI {
 
         majorField.prefHeightProperty().bind(scaleFactor.multiply(45));
         majorField.prefWidthProperty().bind(Bindings.createDoubleBinding(
-            () -> Math.max(120, scene.getWidth() * 0.20), scene.widthProperty()
+                () -> Math.max(120, scene.getWidth() * 0.20),
+                scene.widthProperty()
         ));
         majorField.fontProperty().bind(Bindings.createObjectBinding(
-            () -> Font.font("Segoe UI", 14 * scaleFactor.get()), scaleFactor
+                () -> Font.font("Segoe UI", 14 * scaleFactor.get()),
+                scaleFactor
         ));
 
         universityField.prefHeightProperty().bind(scaleFactor.multiply(45));
         universityField.prefWidthProperty().bind(Bindings.createDoubleBinding(
-            () -> Math.max(120, scene.getWidth() * 0.20), scene.widthProperty()
+                () -> Math.max(120, scene.getWidth() * 0.20),
+                scene.widthProperty()
         ));
         universityField.fontProperty().bind(Bindings.createObjectBinding(
-            () -> Font.font("Segoe UI", 14 * scaleFactor.get()), scaleFactor
+                () -> Font.font("Segoe UI", 14 * scaleFactor.get()),
+                scaleFactor
         ));
 
         yearCombo.prefHeightProperty().bind(scaleFactor.multiply(45));
         yearCombo.prefWidthProperty().bind(Bindings.createDoubleBinding(
-            () -> Math.max(90, scene.getWidth() * 0.15), scene.widthProperty()
+                () -> Math.max(90, scene.getWidth() * 0.15),
+                scene.widthProperty()
         ));
-        yearCombo.styleProperty().bind(Bindings.concat("-fx-font-size: ", scaleFactor.multiply(12)));
+        yearCombo.styleProperty().bind(
+                Bindings.concat("-fx-font-size: ", scaleFactor.multiply(12))
+        );
 
         bindFieldScaling(emailField, scaleFactor, 45, 14);
         bindFieldScaling(passwordField, scaleFactor, 45, 14);
@@ -288,20 +260,18 @@ public class SignUpUI {
 
         bindPadding(leftContent, scaleFactor, new Insets(90, 40, 40, 40));
         bindPadding(rightContent, scaleFactor, new Insets(120, 60, 40, 60));
-        VBox.setMargin(signUpLabel, scaledInsetsBinding(scaleFactor, new Insets(0, 0, 40, 0)));
+        VBox.setMargin(signUpLabel,
+                scaledInsetsBinding(scaleFactor, new Insets(0, 0, 40, 0)));
 
         return root;
     }
 
-    // =========================
-    // Helpers: scaling bindings (UI Utility methods - kept as part of View)
-    // =========================
     private void bindFontScaling(Labeled labeled, DoubleProperty scale, double baseSize) {
         Font base = labeled.getFont() != null ? labeled.getFont() : Font.getDefault();
         String family = base.getFamily();
         labeled.fontProperty().bind(Bindings.createObjectBinding(
-            () -> Font.font(family, baseSize * scale.get()),
-            scale
+                () -> Font.font(family, baseSize * scale.get()),
+                scale
         ));
     }
 
@@ -309,30 +279,32 @@ public class SignUpUI {
         Font base = link.getFont() != null ? link.getFont() : Font.getDefault();
         String family = base.getFamily();
         link.fontProperty().bind(Bindings.createObjectBinding(
-            () -> Font.font(family, baseSize * scale.get()),
-            scale
+                () -> Font.font(family, baseSize * scale.get()),
+                scale
         ));
     }
 
-    private void bindFieldScaling(TextInputControl field, DoubleProperty scale, double baseHeight, double baseFont) {
+    private void bindFieldScaling(TextInputControl field, DoubleProperty scale,
+                                  double baseHeight, double baseFont) {
         field.prefHeightProperty().bind(scale.multiply(baseHeight));
         field.prefWidthProperty().bind(scale.multiply(220));
         Font base = field.getFont() != null ? field.getFont() : Font.getDefault();
         String family = base.getFamily();
         field.fontProperty().bind(Bindings.createObjectBinding(
-            () -> Font.font(family, baseFont * scale.get()),
-            scale
+                () -> Font.font(family, baseFont * scale.get()),
+                scale
         ));
     }
 
-    private void bindButtonScaling(Button btn, DoubleProperty scale, double baseHeight, double baseFont) {
+    private void bindButtonScaling(Button btn, DoubleProperty scale,
+                                   double baseHeight, double baseFont) {
         btn.prefHeightProperty().bind(scale.multiply(baseHeight));
         btn.prefWidthProperty().bind(scale.multiply(260));
         Font base = btn.getFont() != null ? btn.getFont() : Font.getDefault();
         String family = base.getFamily();
         btn.fontProperty().bind(Bindings.createObjectBinding(
-            () -> Font.font(family, baseFont * scale.get()),
-            scale
+                () -> Font.font(family, baseFont * scale.get()),
+                scale
         ));
     }
 
@@ -346,22 +318,22 @@ public class SignUpUI {
 
     private void bindPadding(Region region, DoubleProperty scale, Insets baseInsets) {
         region.paddingProperty().bind(Bindings.createObjectBinding(
-            () -> new Insets(
-                baseInsets.getTop() * scale.get(),
-                baseInsets.getRight() * scale.get(),
-                baseInsets.getBottom() * scale.get(),
-                baseInsets.getLeft() * scale.get()
-            ),
-            scale
+                () -> new Insets(
+                        baseInsets.getTop() * scale.get(),
+                        baseInsets.getRight() * scale.get(),
+                        baseInsets.getBottom() * scale.get(),
+                        baseInsets.getLeft() * scale.get()
+                ),
+                scale
         ));
     }
 
     private Insets scaledInsetsBinding(DoubleProperty scale, Insets base) {
         return new Insets(
-            base.getTop() * scale.get(),
-            base.getRight() * scale.get(),
-            base.getBottom() * scale.get(),
-            base.getLeft() * scale.get()
+                base.getTop() * scale.get(),
+                base.getRight() * scale.get(),
+                base.getBottom() * scale.get(),
+                base.getLeft() * scale.get()
         );
     }
 }
