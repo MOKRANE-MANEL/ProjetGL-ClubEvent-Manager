@@ -1,4 +1,5 @@
 package view;
+
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,29 +14,21 @@ import javafx.stage.Stage;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 
-// This class serves as the PURE VIEW component of the MVC pattern.
-// Its sole responsibility is building and styling the UI elements.
-// All interactive logic and event handling MUST be done in an external Controller class.
-
 public class ChoiceUI {
 
     private static final double BASE_WIDTH = 1000;
     private static final double BASE_HEIGHT = 600;
 
-    // 🌟 Public Elements for Controller Binding 🌟
-    // CONTROLLER INSTRUCTION: Use these public fields to set event handlers (e.g., setOnMouseClicked)
-    // and perform navigation logic.
-    public StackPane studentContainer; // The container representing the Student click area
-    public StackPane adminContainer;   // The container representing the Admin/Club click area
-    public Polygon adminClip;          // Used by Controller to check click boundaries for Admin
-    public Polygon studentClip;        // Used by Controller to check click boundaries for Student
-    public StackPane root;             // The main root of the UI
+    public StackPane studentContainer;
+    public StackPane adminContainer;
+    public Polygon adminClip;
+    public Polygon studentClip;
+    public StackPane root;
 
     public Parent createContent(Stage stage, Scene scene) {
 
         root = new StackPane();
 
-        // ======================= BACKGROUND LAYER (Styling Only) =========================
         Pane backgroundLayer = new Pane();
 
         Region adminBg = new Region();
@@ -49,11 +42,9 @@ public class ChoiceUI {
         studentBg.prefWidthProperty().bind(scene.widthProperty());
         studentBg.prefHeightProperty().bind(scene.heightProperty());
 
-        // Initial clip shapes
-        adminClip = new Polygon(0,0, BASE_WIDTH,0, 0,BASE_HEIGHT);
-        studentClip = new Polygon(BASE_WIDTH,0, BASE_WIDTH,BASE_HEIGHT, 0,BASE_HEIGHT);
+        adminClip = new Polygon(0, 0, BASE_WIDTH, 0, 0, BASE_HEIGHT);
+        studentClip = new Polygon(BASE_WIDTH, 0, BASE_WIDTH, BASE_HEIGHT, 0, BASE_HEIGHT);
 
-        // Bind clip shapes to maintain responsive design
         adminBg.layoutBoundsProperty().addListener((obs, oldVal, newVal) -> {
             adminClip.getPoints().setAll(
                     0.0, 0.0,
@@ -75,16 +66,13 @@ public class ChoiceUI {
 
         backgroundLayer.getChildren().addAll(adminBg, studentBg);
 
-        // ======================= CONTENTS LAYER (Layout and Styling) =========================
         HBox contentLayer = new HBox();
         contentLayer.prefWidthProperty().bind(scene.widthProperty());
         contentLayer.prefHeightProperty().bind(scene.heightProperty());
 
-        // ---- Student Content (Styling Only) ----
         VBox studentContent = new VBox(20);
         studentContent.setAlignment(Pos.CENTER_LEFT);
 
-        // NOTE: Controller must ensure image assets are available in the classpath.
         ImageView studentImg = new ImageView(new Image(getClass().getResourceAsStream(
                 "/assets/Copilot_20251115_154313-removebg-preview.png")));
         studentImg.setPreserveRatio(true);
@@ -96,9 +84,9 @@ public class ChoiceUI {
         Label studentLabel = new Label("As Student");
         studentLabel.setTextFill(Color.WHITE);
         studentLabel.setFont(Font.font("Brush Script MT", 60));
-        studentLabel.styleProperty().bind(Bindings.concat(
-                "-fx-font-size: ", scene.widthProperty().multiply(0.06), ";"
-        ));
+        studentLabel.styleProperty().bind(
+                Bindings.concat("-fx-font-size: ", scene.widthProperty().multiply(0.06), ";")
+        );
         studentLabel.setTranslateX(78);
 
         studentContent.getChildren().addAll(studentImg, studentLabel);
@@ -108,27 +96,23 @@ public class ChoiceUI {
         studentContainer.prefHeightProperty().bind(scene.heightProperty());
         studentContainer.setAlignment(Pos.CENTER_LEFT);
 
-        // ---- Admin Content (Styling Only) ----
         VBox adminContent = new VBox(20);
         adminContent.setAlignment(Pos.CENTER_LEFT);
 
-        // NOTE: Controller must ensure image assets are available in the classpath.
         ImageView adminImg = new ImageView(new Image(getClass().getResourceAsStream(
                 "/assets/ChatGPT Image 17 nov. 2025, 17_57_43.png")));
         adminImg.setPreserveRatio(true);
 
         adminImg.fitWidthProperty().bind(scene.widthProperty().multiply(0.36));
         adminImg.fitHeightProperty().bind(scene.heightProperty().multiply(0.60));
-
         VBox.setMargin(adminImg, new Insets(-150, 0, 0, 40));
 
         Label adminLabel = new Label("As Club");
         adminLabel.setTextFill(Color.WHITE);
         adminLabel.setFont(Font.font("Brush Script MT", 60));
-        adminLabel.styleProperty().bind(Bindings.concat(
-                "-fx-font-size: ", scene.widthProperty().multiply(0.06), ";"
-        ));
-
+        adminLabel.styleProperty().bind(
+                Bindings.concat("-fx-font-size: ", scene.widthProperty().multiply(0.06), ";")
+        );
         adminLabel.setTranslateX(80);
         VBox.setMargin(adminLabel, new Insets(-60, 0, 0, 0));
 
@@ -141,10 +125,6 @@ public class ChoiceUI {
 
         contentLayer.getChildren().addAll(adminContainer, studentContainer);
 
-        // ❌ ACTIONS LOGIC REMOVED: All mouse click handlers must be implemented 
-        // in the external Controller class using the public fields.
-
-        // ======================== FINAL STACK ============================
         root.getChildren().addAll(backgroundLayer, contentLayer);
 
         return root;
